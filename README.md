@@ -78,9 +78,6 @@ BaseURL : localhost:3001/
 
 ## REST API Requests  ##
 
-* Here is the sharable link for POSTMAN to use all of this request. Just Import Request from the given link to POSTMAN.
-[https://www.getpostman.com/collections/0833962d50247e7f69a0](https://www.getpostman.com/collections/0833962d50247e7f69a0)
-
 1. Create restaurant
 ```javascript
     POST http://localhost:3001/restaurants
@@ -309,8 +306,8 @@ BaseURL : localhost:3001/
 
 * I have attached some screenshots displaying the response time for both the scenario.
 
-    1. MongoDB Access   :   70ms
-    2. Redis Cache      :   5ms
+    1. MongoDB Access   :   40ms
+    2. Redis Cache      :   11ms
 
 * Fetching from mongoDB
 ![Alt text](/images/Withoutredis.png?raw=true "From MongoDB")
@@ -330,11 +327,11 @@ Run following command to run unit tests
 
 
 
-## Handling millions of request at once ##
+## Handling large data of restaurants all over USA ##
 
 To handle millions of requests simultaneously and to scale the accordingly, we can host the server on AWS ec2 instances with load balancing. Each instances serves all the API requests and the AWS ELB balances load on all the instances.
 
 To overcome data consistency problem, we can host mongodb database on a separate instance serving the requests being attanded to on different instances. 
 
-![Alt text](/images/Architecture.xml?raw=true "Architectural Diagram")
+![Alt text](/images/architecture.png?raw=true "Architectural Diagram")
 
