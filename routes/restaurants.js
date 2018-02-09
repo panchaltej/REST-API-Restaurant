@@ -4,6 +4,8 @@ var mongo = require("./mongo");
 var mongoURL = "mongodb://localhost:27017/restaurantdb";
 var mongodb = require('mongodb');
 var ObjectID = require('mongodb').ObjectID;
+var Redis = require('redis');
+var RedisClient = Redis.createClient();
 
 //============RESTAURANTS=======================
 router.post('/', function (req, res, next) {
@@ -30,8 +32,16 @@ router.post('/', function (req, res, next) {
 
 router.get('/:restaurant_id', function (req, res, next) {
     var restaurantId = req.params.restaurant_id;
+    var redisKey = "Restaurant#" + restaurantId;
     try {
-        mongo.connect(mongoURL, function(){
+            RedisClient.get(redisKey, function(err, redisResponse) {
+            // reply is null when the key is missing 
+            console.log(redisResponse);
+            if(!err && redisResponse){
+                res.status(200).send(JSON.parse(redisResponse));
+            }
+            else{
+            mongo.connect(mongoURL, function(){
             console.log('Connected to mongo at: ' + mongoURL);
             var coll = mongo.collection('restaurants');
             var restaurantQuery = {'_id': new mongodb.ObjectID(restaurantId)};
@@ -54,8 +64,11 @@ router.get('/:restaurant_id', function (req, res, next) {
                 }
                 
                 });
-        });
+            });
+        }
+    });
     }
+
     catch (e){
         console.log(e);
     }
@@ -117,6 +130,7 @@ router.post('/:restaurant_id/menu', function (req, res, next) {
 router.get('/:restaurant_id/menu', function (req, res, next) {
     try {
         restaurantId = req.params.restaurant_id;
+
         mongo.connect(mongoURL, function(){
             console.log('Connected to mongo at: ' + mongoURL);
             var coll = mongo.collection('restaurants');
