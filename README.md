@@ -63,7 +63,6 @@ BaseURL : localhost:3001/
 
 | Endpoint                         | HTTP Verb | Functionality                                                               | Example                             | Success Response Code |
 |----------------------------------|-----------|-------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------|
-
 | /restaurants                                          | POST      | Create new restaurant in the database.    | localhost:3001/restaurants                                        | 201 |
 | /restaurants/:restaurant_id                            | GET       | Get Restaurant details with the generated restaurant ID                       | localhost:3001/restaurants/:restaurant_id                     | 200 |
 | /restaurants/:restaurantID                            | DELETE    | Delete Restaurant with the given restaurant ID                    | localhost:3001/restaurants/:restaurant_id                     | 200 |
